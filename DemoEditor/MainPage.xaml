@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DemoEditor.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DemoEditor"
+    xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:telerikSegmentedControls="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ListViewItemTemplate">
+                <telerikListView:ListViewTemplateCell>
+                    <telerikListView:ListViewTemplateCell.View>
+                        <StackLayout
+                            Margin="0,0,0,5"
+                            Padding="0,5,0,5"
+                            Orientation="Horizontal">
+                            <telerikSegmentedControls:RadButton
+                                BackgroundColor="#B499C7"
+                                CornerRadius="21"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                HeightRequest="42"
+                                HorizontalOptions="Start"
+                                Text="F"
+                                TextColor="Black"
+                                VerticalOptions="StartAndExpand"
+                                WidthRequest="42" />
+                            <StackLayout Spacing="0" VerticalOptions="StartAndExpand">
+                                <Label Text="{Binding Title}" TextColor="Black" />
+                                <Label Text="{Binding QrCode}" TextColor="Black" />
+                                <Label Text="{Binding ShowDate}" TextColor="Black" />
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding Amount}" TextColor="Black" />
+                                <Label Text="MMK" TextColor="Black" />
+                            </StackLayout>
+                        </StackLayout>
+                    </telerikListView:ListViewTemplateCell.View>
+                </telerikListView:ListViewTemplateCell>
+            </DataTemplate>
+            <DataTemplate x:Key="ListViewGroupHeaderTemplate">
+                <StackLayout
+                    Margin="0,10,0,10"
+                    Padding="0,10,0,10"
+                    BackgroundColor="#F0E4F9">
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="0,12,0,6"
+                        FontSize="Medium"
+                        HorizontalOptions="Start"
+                        Text="{Binding Key, Converter={StaticResource continentalIdToTextConverter}}"
+                        TextColor="DarkGray" />
+                </StackLayout>
+            </DataTemplate>
+            <telerikListView:ListViewGroupStyle x:Key="ListViewGroupHeaderStyle" BackgroundColor="Transparent" />
+        </ResourceDictionary>
+        <local:ContinentalIdToTextConverter x:Key="continentalIdToTextConverter" />
+    </ContentPage.Resources>
+    <StackLayout>
+        <telerikDataControls:RadListView
+            x:Name="listView"
+            Margin="10,0,10,0"
+            BackgroundColor="#FFF"
+            GroupHeaderStyle="{StaticResource ListViewGroupHeaderStyle}"
+            GroupHeaderTemplate="{StaticResource ListViewGroupHeaderTemplate}"
+            ItemTemplate="{StaticResource ListViewItemTemplate}"
+            ItemsSource="{Binding Logs, Mode=TwoWay}">
+            <telerikDataControls:RadListView.LayoutDefinition>
+                <telerikListView:ListViewLinearLayout
+                    HorizontalItemSpacing="0"
+                    Orientation="Vertical"
+                    VerticalItemSpacing="1" />
+            </telerikDataControls:RadListView.LayoutDefinition>
+            <telerikDataControls:RadListView.SelectedItemStyle>
+                <telerikListView:ListViewItemStyle BackgroundColor="#FFF" />
+            </telerikDataControls:RadListView.SelectedItemStyle>
+
+        </telerikDataControls:RadListView>
+    </StackLayout>
+
+</ContentPage>
